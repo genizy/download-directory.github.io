@@ -59,8 +59,6 @@ async function getZip() {
 	return new JSZip();
 }
 
-const googleDoesntLikeThis = /malware|virus|trojan/i;
-
 async function init() {
 	updateStatus();
 	const zipPromise = getZip();
@@ -82,10 +80,6 @@ async function init() {
 		return;
 	}
 
-	if (googleDoesntLikeThis.test(url)) {
-		updateStatus('Virus, malware, trojans are not allowed');
-		return;
-	}
 
 	if (!navigator.onLine) {
 		updateStatus('⚠ You are offline.');
@@ -139,11 +133,6 @@ async function init() {
 
 	if (files.length === 0) {
 		updateStatus('No files to download');
-		return;
-	}
-
-	if (files.some(file => googleDoesntLikeThis.test(file.path))) {
-		updateStatus('Virus, malware, trojans are not allowed');
 		return;
 	}
 
